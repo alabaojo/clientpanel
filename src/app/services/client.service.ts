@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { Client } from '../models/Client';
 
+
 @Injectable()
 export class ClientService {
   clientsCollection: AngularFirestoreCollection<Client>;
@@ -22,7 +23,6 @@ export class ClientService {
         return changes.map(action => {
           const data = action.payload.doc.data() as Client;
           data.id = action.payload.doc.id;
-          console.log(data);
           return data;
         });
       });
@@ -30,5 +30,22 @@ export class ClientService {
   }
   newClient(client: Client) {
     this.clientsCollection.add(client);
+  }
+  getClient(id: string): Observable<Client> {
+    // get client with id;
+    this.clientDoc = this.afs.doc<Client>(`clients/${id}`);
+    this.client = this.clientDoc.snapshotChanges()
+      .map(action => {
+        if (action.payload.exists === false) {
+          console.log('nothing 4u');
+        return null;
+      } else {
+          const data = action.payload.data() as Client;
+          data.id = action.payload.id;
+          console.log(this.client);
+          return data;
+        }
+      });
+      return this.client;
   }
 }
