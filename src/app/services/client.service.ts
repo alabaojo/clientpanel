@@ -49,11 +49,11 @@ export class ClientService {
       return this.client;
   }
   updateClient(client: Client) {
-    this.clientDoc = this.afs.doc('client/${client.id}');
+    this.clientDoc = this.afs.doc(`clients/${client.id}`);
     this.clientDoc.update(client);
   }
   deleteClient(client: Client) {
-    this.clientDoc = this.afs.doc('client/${client.id}');
+    this.clientDoc = this.afs.doc(`clients/${client.id}`);
     this.clientDoc.delete();
   }
 }

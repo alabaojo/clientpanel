@@ -23,6 +23,7 @@ import { ClientDetailsComponent } from './components/client-details/client-detai
 import { AppRoutingModule } from './/app-routing.module';
 import { ClientService } from './services/client.service';
 import { ClientsComponent } from './components/clients/clients.component';
+import { AuthService } from './services/auth.service';
 
 
 @NgModule({
@@ -49,7 +50,7 @@ import { ClientsComponent } from './components/clients/clients.component';
     FormsModule,
     FlashMessagesModule.forRoot()
   ],
-  providers: [ClientService],
+  providers: [ClientService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
