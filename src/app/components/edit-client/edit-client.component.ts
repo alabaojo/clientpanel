@@ -5,6 +5,7 @@ import { FlashMessagesService } from 'angular2-flash-messages';
 import { ClientService } from '../../services/client.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
+import { SettingsService } from '../../services/settings.service';
 import { Client } from '../../models/Client';
 // import { flashMessagesModule } from 'angular2-flash-messages/module/module';
 
@@ -23,12 +24,13 @@ export class EditClientComponent implements OnInit {
     phone: '',
     balance: 0,
   };
-  disableBalanceOnAdd = true; // ensure no balance when new client is added
+  disableBalanceOnEdit: boolean; // ensure no balance when new client is added
   constructor(
     private clientService: ClientService,
     private router: Router,
     private route: ActivatedRoute,
     private flashMessage: FlashMessagesService,
+    private settingsService: SettingsService,
   ) { }
 
   ngOnInit() {
@@ -37,8 +39,8 @@ export class EditClientComponent implements OnInit {
         // get Client
         this.clientService.getClient(this.id).subscribe(client => {
           this.client = client;
-          console.log(this.client);
         });
+        this.disableBalanceOnEdit = this.settingsService.getSettings().disableBalanceOnEdit;
   }
   // the type of 'Client' but for shadow var warning
   onSubmit({value, valid}: {value: Client, valid: boolean} ) {
